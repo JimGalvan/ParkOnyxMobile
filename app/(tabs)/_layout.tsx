@@ -1,37 +1,35 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Icon, NativeBaseProvider} from 'native-base';
+import {Ionicons} from '@expo/vector-icons';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import HomeScreen from '../(tabs)/index';
+import ExploreScreen from '../(tabs)/explore';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+const Tab = createBottomTabNavigator();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
-}
+const TabLayout: React.FC = () => {
+    return (
+        <NativeBaseProvider>
+            <Tab.Navigator
+                screenOptions={({route}) => ({
+                    tabBarIcon: ({color, size, focused}) => {
+                        let iconName: string = 'default-icon'; // Provide a default value
+                        if (route.name === 'Home') {
+                            iconName = focused ? 'home' : 'home-outline';
+                        } else if (route.name === 'Explore') {
+                            iconName = focused ? 'code-slash' : 'code-slash-outline';
+                        }
+                        return <Icon as={Ionicons} name={iconName} size={size} color={color}/>;
+                    },
+                    tabBarActiveTintColor: '#6366F1', // Example accent color
+                })}
+            >
+                <Tab.Screen name="Home" component={HomeScreen}/>
+                <Tab.Screen name="Explore" component={ExploreScreen}/>
+            </Tab.Navigator>
+        </NativeBaseProvider>
+    );
+};
+
+export default TabLayout;
