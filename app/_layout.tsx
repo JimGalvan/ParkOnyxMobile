@@ -1,11 +1,12 @@
 import {useFonts} from 'expo-font';
-import {Navigator, Stack} from 'expo-router';
+import {Navigator} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
 
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {SessionProvider} from '@/auth/auth-context';
+import {NativeBaseProvider} from "native-base";
 import Slot = Navigator.Slot;
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -28,8 +29,10 @@ export default function RootLayout() {
   }
 
   return (
+      <NativeBaseProvider>
       <SessionProvider>
         <Slot/>
       </SessionProvider>
+      </NativeBaseProvider>
   );
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import authStore from "@/state/authStore";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5107/api', // Replace with your API base URL
+    baseURL: 'http://localhost:5107/api/v1', // Replace with your API base URL
     headers: {
         'Content-Type': 'application/json',
     },
