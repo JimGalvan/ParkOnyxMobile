@@ -3,7 +3,7 @@ import {useStorageState} from './useStorageState';
 import axiosInstance from '../services/axiosInstance' // Import your axios instance
 
 const AuthContext = createContext<{
-    signIn: (username: string, password: string) => Promise<void>;
+    signIn: (email: string, password: string) => Promise<void>;
     signOut: () => void;
     session?: string | null;
     isLoading: boolean;
@@ -27,11 +27,11 @@ export function useSession() {
 export function SessionProvider({children}: PropsWithChildren) {
     const [[isLoading, session], setSession] = useStorageState('session');
 
-    const signIn = async (username: string, password: string) => {
+    const signIn = async (email: string, password: string) => {
         try {
             // Use axiosInstance to make the request
             const response = await axiosInstance.post('/Auth/Login', {
-                username,
+                email,
                 password,
             });
 
