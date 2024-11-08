@@ -1,6 +1,6 @@
 import {createContext, type PropsWithChildren, useContext} from 'react';
 import {useStorageState} from './useStorageState';
-import axiosInstance from '../services/axiosInstance' // Import your axios instance
+import axiosInstance from '../services/axiosInstance';
 
 const AuthContext = createContext<{
     signIn: (email: string, password: string) => Promise<void>;

@@ -1,8 +1,13 @@
 import axios from 'axios';
+import {Platform} from 'react-native';
 import authStore from "@/state/authStore";
 
+const baseURL = Platform.OS === 'web'
+    ? 'http://localhost:5200/api/v1' // Base URL for web
+    : 'http://10.0.2.2:5200/api/v1'; // Base URL for mobile/simulator
+
 const axiosInstance = axios.create({
-    baseURL: 'http://10.0.2.2:5200/api/v1', // Replace with your API base URL
+    baseURL,
     headers: {
         'Content-Type': 'application/json',
     },

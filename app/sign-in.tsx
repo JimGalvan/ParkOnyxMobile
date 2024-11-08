@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, Center, Input, VStack} from 'native-base';
+import {Box, Button, Center, Image, Input, VStack} from 'native-base';
 import {router} from 'expo-router';
 import {useSession} from '@/auth/auth-context';
 
@@ -11,6 +11,12 @@ export default function SignIn() {
     return (
         <Center flex={1} bg="white">
             <VStack space={4} alignItems="center" w="90%">
+                <Image
+                    source={{uri: 'https://example.com/logo.png'}}
+                    alt="Logo"
+                    size="xl"
+                    mb={4}
+                />
                 <Input
                     placeholder="Email"
                     value={email}
@@ -28,11 +34,15 @@ export default function SignIn() {
                 />
                 <Box>
                     <Button
-                        onPress={() => {
-                            signIn(email, password);
-                            // Navigate after signing in. You may want to tweak this to ensure sign-in is
-                            // successful before navigating.
-                            router.replace('/');
+                        onPress={async () => {
+                            try {
+                                await signIn(email, password);
+                                // Navigate after successful sign-in
+                                router.replace('/');
+                            } catch (error) {
+                                //TODO: handle error with a toast message
+                                console.error('Sign-in failed:', error);
+                            }
                         }}
                         colorScheme="primary"
                     >
